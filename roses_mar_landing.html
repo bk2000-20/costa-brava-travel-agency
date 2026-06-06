@@ -1,0 +1,689 @@
+
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --sand: #F5F0E8;
+  --sand-dark: #EDE5D5;
+  --stone: #C8B99A;
+  --terra: #8B6F55;
+  --sea: #2C6E7A;
+  --sea-light: #4A8E9A;
+  --sea-pale: #E8F3F5;
+  --ink: #1A1612;
+  --ink-mid: #4A3F35;
+  --ink-light: #7A6E65;
+  --white: #FDFCFA;
+  --accent: #C4572A;
+}
+
+body {
+  font-family: 'Jost', sans-serif;
+  background: var(--white);
+  color: var(--ink);
+  font-weight: 300;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+/* NAV */
+nav {
+  position: sticky; top: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 1rem 2.5rem;
+  background: var(--white);
+  border-bottom: 0.5px solid var(--sand-dark);
+}
+.logo {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.35rem;
+  letter-spacing: 0.02em;
+  color: var(--ink);
+}
+.logo span { color: var(--sea); font-style: italic; }
+.nav-links { display: flex; gap: 2rem; font-size: 0.82rem; font-weight: 400; letter-spacing: 0.08em; text-transform: uppercase; }
+.nav-links a { color: var(--ink-light); text-decoration: none; cursor: pointer; transition: color 0.2s; }
+.nav-links a:hover { color: var(--sea); }
+.nav-cart {
+  display: flex; align-items: center; gap: 0.5rem;
+  padding: 0.45rem 1.1rem; border: 1px solid var(--ink);
+  font-size: 0.8rem; letter-spacing: 0.06em; text-transform: uppercase;
+  font-weight: 400; cursor: pointer; transition: all 0.2s; background: transparent;
+  font-family: 'Jost', sans-serif; color: var(--ink);
+}
+.nav-cart:hover { background: var(--ink); color: var(--white); }
+.cart-count {
+  background: var(--sea); color: white;
+  border-radius: 50%; width: 18px; height: 18px;
+  font-size: 0.7rem; display: flex; align-items: center; justify-content: center;
+  font-weight: 500;
+}
+
+/* HERO */
+.hero {
+  padding: 5rem 2.5rem 4rem;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: end;
+  max-width: 1100px; margin: 0 auto;
+}
+.hero-eyebrow {
+  font-size: 0.75rem; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--sea); margin-bottom: 1.2rem; font-weight: 400;
+}
+.hero-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2.4rem, 4vw, 3.8rem);
+  line-height: 1.12; font-weight: 400;
+  color: var(--ink); margin-bottom: 1.5rem;
+}
+.hero-title em { color: var(--sea); font-style: italic; }
+.hero-body {
+  font-size: 1rem; color: var(--ink-mid);
+  max-width: 40ch; margin-bottom: 2rem; font-weight: 300; line-height: 1.75;
+}
+.hero-cta {
+  display: inline-block; padding: 0.75rem 2rem;
+  background: var(--sea); color: white;
+  font-family: 'Jost', sans-serif; font-size: 0.82rem;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  font-weight: 400; cursor: pointer; border: none;
+  transition: background 0.25s;
+}
+.hero-cta:hover { background: var(--sea-light); }
+.hero-visual {
+  display: flex; flex-direction: column; gap: 1rem; align-items: flex-end;
+}
+.hero-stat {
+  text-align: right;
+}
+.hero-stat-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 3rem; color: var(--sea); line-height: 1;
+}
+.hero-stat-label {
+  font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em;
+  color: var(--ink-light); font-weight: 400;
+}
+.hero-divider { width: 1px; height: 60px; background: var(--sand-dark); margin: 0.5rem auto; }
+.hero-badge {
+  padding: 0.6rem 1.2rem;
+  background: var(--sea-pale);
+  font-size: 0.8rem; color: var(--sea);
+  letter-spacing: 0.05em; font-weight: 400;
+}
+
+/* SECTION COMMON */
+section { max-width: 1100px; margin: 0 auto; padding: 4rem 2.5rem; }
+.section-header { margin-bottom: 3rem; }
+.section-eyebrow {
+  font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--stone); margin-bottom: 0.6rem; font-weight: 400;
+}
+.section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 2rem; font-weight: 400; color: var(--ink);
+}
+
+/* PACKS GRID */
+.packs-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5px; background: var(--sand-dark); }
+.pack-card {
+  background: var(--white); padding: 2rem 1.75rem;
+  cursor: pointer; transition: background 0.2s;
+  position: relative;
+}
+.pack-card:hover { background: var(--sand); }
+.pack-card.featured { background: var(--sea); }
+.pack-card.featured:hover { background: var(--sea-light); }
+.pack-number {
+  font-size: 0.7rem; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--stone); margin-bottom: 1.2rem; font-weight: 400;
+}
+.pack-card.featured .pack-number { color: rgba(255,255,255,0.6); }
+.pack-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.5rem; font-weight: 400; margin-bottom: 0.4rem; line-height: 1.2;
+}
+.pack-card.featured .pack-name { color: white; }
+.pack-subtitle {
+  font-size: 0.8rem; color: var(--ink-light); margin-bottom: 1.5rem;
+  font-style: italic; font-family: 'Playfair Display', serif;
+}
+.pack-card.featured .pack-subtitle { color: rgba(255,255,255,0.75); }
+.pack-includes { list-style: none; margin-bottom: 1.75rem; }
+.pack-includes li {
+  font-size: 0.82rem; color: var(--ink-mid);
+  padding: 0.3rem 0; border-bottom: 0.5px solid var(--sand-dark);
+  display: flex; align-items: center; gap: 0.5rem;
+}
+.pack-card.featured .pack-includes li { color: rgba(255,255,255,0.85); border-bottom-color: rgba(255,255,255,0.15); }
+.pack-includes li::before {
+  content: '—'; color: var(--sea); font-weight: 400; flex-shrink: 0;
+}
+.pack-card.featured .pack-includes li::before { color: rgba(255,255,255,0.5); }
+.pack-price-row { display: flex; align-items: baseline; justify-content: space-between; }
+.pack-price {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.6rem; color: var(--ink); font-weight: 400;
+}
+.pack-card.featured .pack-price { color: white; }
+.pack-price-from {
+  font-size: 0.72rem; color: var(--ink-light); text-transform: uppercase;
+  letter-spacing: 0.08em; font-weight: 400;
+}
+.pack-card.featured .pack-price-from { color: rgba(255,255,255,0.6); }
+.pack-add-btn {
+  display: flex; align-items: center; gap: 0.4rem;
+  font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase;
+  font-weight: 400; font-family: 'Jost', sans-serif;
+  cursor: pointer; border: 1px solid; padding: 0.45rem 1rem;
+  transition: all 0.2s; background: transparent;
+}
+.pack-add-btn { border-color: var(--ink); color: var(--ink); }
+.pack-add-btn:hover { background: var(--ink); color: white; }
+.pack-card.featured .pack-add-btn { border-color: white; color: white; }
+.pack-card.featured .pack-add-btn:hover { background: white; color: var(--sea); }
+.pack-badge {
+  position: absolute; top: 1.25rem; right: 1.25rem;
+  background: rgba(255,255,255,0.2); color: white;
+  font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase;
+  padding: 0.25rem 0.6rem; font-weight: 400;
+}
+
+/* À LA CARTE */
+.carte-categories { display: flex; gap: 0.5rem; margin-bottom: 2rem; flex-wrap: wrap; }
+.cat-btn {
+  padding: 0.4rem 1rem; border: 0.5px solid var(--sand-dark);
+  font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase;
+  font-weight: 400; cursor: pointer; font-family: 'Jost', sans-serif;
+  background: transparent; color: var(--ink-light); transition: all 0.2s;
+}
+.cat-btn.active, .cat-btn:hover {
+  background: var(--ink); color: white; border-color: var(--ink);
+}
+.carte-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--sand-dark); }
+.carte-item {
+  background: var(--white); padding: 1.25rem;
+  cursor: pointer; transition: background 0.15s;
+}
+.carte-item:hover { background: var(--sand); }
+.carte-item.hidden { display: none; }
+.carte-icon { font-size: 1.3rem; margin-bottom: 0.75rem; }
+.carte-name { font-size: 0.9rem; font-weight: 400; color: var(--ink); margin-bottom: 0.3rem; }
+.carte-desc { font-size: 0.75rem; color: var(--ink-light); margin-bottom: 0.75rem; line-height: 1.5; }
+.carte-price { font-size: 0.82rem; color: var(--sea); font-weight: 400; margin-bottom: 0.5rem; }
+.carte-add {
+  font-size: 0.7rem; letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--ink-light); cursor: pointer; font-family: 'Jost', sans-serif;
+  border: none; background: none; font-weight: 400; padding: 0;
+  transition: color 0.2s;
+}
+.carte-add:hover { color: var(--sea); }
+
+/* CART PANEL */
+.cart-overlay {
+  position: fixed; inset: 0; background: rgba(26,22,18,0.4);
+  z-index: 200; opacity: 0; pointer-events: none; transition: opacity 0.3s;
+}
+.cart-overlay.open { opacity: 1; pointer-events: all; }
+.cart-panel {
+  position: fixed; right: 0; top: 0; bottom: 0; width: 380px;
+  background: var(--white); z-index: 201;
+  transform: translateX(100%); transition: transform 0.35s cubic-bezier(.4,0,.2,1);
+  overflow-y: auto; display: flex; flex-direction: column;
+}
+.cart-panel.open { transform: translateX(0); }
+.cart-header {
+  padding: 1.5rem 1.75rem; border-bottom: 0.5px solid var(--sand-dark);
+  display: flex; align-items: center; justify-content: space-between;
+  position: sticky; top: 0; background: var(--white); z-index: 1;
+}
+.cart-title {
+  font-family: 'Playfair Display', serif; font-size: 1.15rem; font-weight: 400;
+}
+.cart-close {
+  font-size: 1.2rem; cursor: pointer; color: var(--ink-light);
+  border: none; background: none; line-height: 1; font-family: 'Jost', sans-serif;
+}
+.cart-items { flex: 1; padding: 1.25rem 1.75rem; }
+.cart-empty {
+  text-align: center; color: var(--ink-light); font-size: 0.85rem;
+  padding: 3rem 1rem; font-style: italic; font-family: 'Playfair Display', serif;
+}
+.cart-line {
+  display: flex; align-items: flex-start; justify-content: space-between;
+  padding: 0.9rem 0; border-bottom: 0.5px solid var(--sand-dark); gap: 1rem;
+}
+.cart-line-name { font-size: 0.85rem; color: var(--ink); font-weight: 400; }
+.cart-line-sub { font-size: 0.72rem; color: var(--ink-light); margin-top: 0.15rem; }
+.cart-line-right { text-align: right; flex-shrink: 0; }
+.cart-line-price { font-size: 0.9rem; color: var(--sea); }
+.cart-line-remove {
+  font-size: 0.65rem; letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--stone); cursor: pointer; border: none; background: none;
+  font-family: 'Jost', sans-serif; display: block; margin-top: 0.25rem;
+}
+.cart-footer {
+  padding: 1.5rem 1.75rem; border-top: 0.5px solid var(--sand-dark);
+  background: var(--white); position: sticky; bottom: 0;
+}
+.cart-total-row { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 1.25rem; }
+.cart-total-label { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--ink-light); font-weight: 400; }
+.cart-total-amount {
+  font-family: 'Playfair Display', serif; font-size: 1.6rem; color: var(--ink);
+}
+.cart-submit {
+  width: 100%; padding: 0.85rem;
+  background: var(--sea); color: white;
+  font-family: 'Jost', sans-serif; font-size: 0.8rem;
+  letter-spacing: 0.1em; text-transform: uppercase; font-weight: 400;
+  border: none; cursor: pointer; transition: background 0.2s;
+}
+.cart-submit:hover { background: var(--sea-light); }
+.cart-note { font-size: 0.7rem; color: var(--ink-light); text-align: center; margin-top: 0.75rem; }
+
+/* STRIP */
+.strip {
+  background: var(--sea); color: white;
+  padding: 1rem 2.5rem; text-align: center;
+  font-size: 0.78rem; letter-spacing: 0.1em; text-transform: uppercase;
+  font-weight: 400;
+}
+
+/* FOOTER */
+footer {
+  background: var(--ink); color: rgba(255,255,255,0.5);
+  padding: 3rem 2.5rem; display: grid; grid-template-columns: 1fr 1fr 1fr;
+  gap: 2rem; font-size: 0.78rem;
+}
+.footer-brand { font-family: 'Playfair Display', serif; color: white; font-size: 1.15rem; margin-bottom: 0.75rem; }
+.footer-brand span { color: var(--sea-light); font-style: italic; }
+footer p { line-height: 1.7; }
+.footer-head { color: rgba(255,255,255,0.7); text-transform: uppercase; letter-spacing: 0.1em; font-size: 0.68rem; margin-bottom: 0.75rem; font-weight: 400; }
+footer ul { list-style: none; }
+footer li { padding: 0.2rem 0; }
+footer a { color: rgba(255,255,255,0.45); text-decoration: none; }
+footer a:hover { color: white; }
+
+/* TOAST */
+.toast {
+  position: fixed; bottom: 2rem; left: 50%; transform: translateX(-50%) translateY(2rem);
+  background: var(--ink); color: white;
+  padding: 0.7rem 1.5rem; font-size: 0.8rem; letter-spacing: 0.05em;
+  z-index: 300; opacity: 0; transition: all 0.3s; pointer-events: none;
+  white-space: nowrap;
+}
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">Roses <span>&</span> Mar</div>
+  <div class="nav-links">
+    <a onclick="scrollTo('packs')">Pakete</a>
+    <a onclick="scrollTo('carte')">Erlebnisse</a>
+    <a onclick="scrollTo('contact')">Kontakt</a>
+  </div>
+  <button class="nav-cart" onclick="toggleCart()">
+    Warenkorb <span class="cart-count" id="cartCount">0</span>
+  </button>
+</nav>
+
+<div class="hero">
+  <div>
+    <p class="hero-eyebrow">Costa Brava · Exklusiv für die Schweiz</p>
+    <h1 class="hero-title">Das Mittelmeer,<br><em>kuratiert</em> für Sie</h1>
+    <p class="hero-body">Handverlesene Erlebnisse an der Costa Brava — mit persönlicher Betreuung auf Deutsch und Französisch, ab Zürich buchbar.</p>
+    <button class="hero-cta" onclick="scrollTo('packs')">Pakete entdecken</button>
+  </div>
+  <div class="hero-visual">
+    <div class="hero-stat">
+      <div class="hero-stat-num">3</div>
+      <div class="hero-stat-label">Erlebnispakete</div>
+    </div>
+    <div class="hero-divider"></div>
+    <div class="hero-stat">
+      <div class="hero-stat-num">CHF</div>
+      <div class="hero-stat-label">Buchung in Schweizer Franken</div>
+    </div>
+    <div class="hero-divider"></div>
+    <div class="hero-badge">Persönliche Betreuung auf Deutsch & Français</div>
+  </div>
+</div>
+
+<div class="strip" id="packs">Alle Preise in CHF · Direktbuchung · Keine versteckten Gebühren</div>
+
+<section>
+  <div class="section-header">
+    <p class="section-eyebrow">Unsere Pakete</p>
+    <h2 class="section-title">Drei Wege zur Costa Brava</h2>
+  </div>
+  <div class="packs-grid">
+
+    <div class="pack-card">
+      <div class="pack-number">01</div>
+      <h3 class="pack-name">Apartment am Meer</h3>
+      <p class="pack-subtitle">Roses, Costa Brava</p>
+      <ul class="pack-includes">
+        <li>Privatapartment in Roses</li>
+        <li>Willkommenskorb mit lokalen Produkten</li>
+        <li>Persönliche Betreuung auf Deutsch</li>
+        <li>Flexibler Check-in/out</li>
+      </ul>
+      <div class="pack-price-row">
+        <div>
+          <div class="pack-price-from">ab</div>
+          <div class="pack-price">290 CHF<small style="font-size:0.9rem">/Nacht</small></div>
+        </div>
+        <button class="pack-add-btn" onclick="addToCart('Apartment am Meer', 290, '/Nacht')">+ Anfragen</button>
+      </div>
+    </div>
+
+    <div class="pack-card featured">
+      <div class="pack-badge">Beliebt</div>
+      <div class="pack-number">02</div>
+      <h3 class="pack-name">Bienestar Costa Brava</h3>
+      <p class="pack-subtitle">Wellness & Erholung</p>
+      <ul class="pack-includes">
+        <li>3 Nächte im Apartment, Roses</li>
+        <li>2 Massagen (60 min) pro Person</li>
+        <li>Meeresritual & Gesichtsbehandlung</li>
+        <li>Willkommenskorb & Betreuung</li>
+      </ul>
+      <div class="pack-price-row">
+        <div>
+          <div class="pack-price-from">ab</div>
+          <div class="pack-price">890 CHF<small style="font-size:0.9rem">/Person</small></div>
+        </div>
+        <button class="pack-add-btn" onclick="addToCart('Bienestar Costa Brava', 890, '/Person')">+ Buchen</button>
+      </div>
+    </div>
+
+    <div class="pack-card">
+      <div class="pack-number">03</div>
+      <h3 class="pack-name">Meer & Abenteuer</h3>
+      <p class="pack-subtitle">Aktiv & Unvergesslich</p>
+      <ul class="pack-includes">
+        <li>3 Nächte im Apartment, Roses</li>
+        <li>Bootsausflug zu den Calas</li>
+        <li>1h Jetski für 2 Personen</li>
+        <li>Schnorchel-Equipment & Guide</li>
+      </ul>
+      <div class="pack-price-row">
+        <div>
+          <div class="pack-price-from">ab</div>
+          <div class="pack-price">1.050 CHF<small style="font-size:0.9rem">/Person</small></div>
+        </div>
+        <button class="pack-add-btn" onclick="addToCart('Meer &amp; Abenteuer', 1050, '/Person')">+ Buchen</button>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section id="carte" style="padding-top:0">
+  <div class="section-header">
+    <p class="section-eyebrow">À la carte</p>
+    <h2 class="section-title">Erlebnisse nach Wunsch</h2>
+  </div>
+  <div class="carte-categories">
+    <button class="cat-btn active" onclick="filterCarte('all', this)">Alle</button>
+    <button class="cat-btn" onclick="filterCarte('wasser', this)">Wasser</button>
+    <button class="cat-btn" onclick="filterCarte('wellness', this)">Wellness</button>
+    <button class="cat-btn" onclick="filterCarte('gastro', this)">Gastronomie</button>
+    <button class="cat-btn" onclick="filterCarte('extra', this)">Extras</button>
+  </div>
+  <div class="carte-grid" id="carteGrid">
+
+    <div class="carte-item" data-cat="wasser">
+      <div class="carte-icon">⛵</div>
+      <div class="carte-name">Bootsausflug zu den Calas</div>
+      <div class="carte-desc">Halbtagesausflug zu versteckten Buchten mit lokalem Skipper</div>
+      <div class="carte-price">ab 85 CHF / Person</div>
+      <button class="carte-add" onclick="addToCart('Bootsausflug Calas', 85, '/Person')">+ In den Warenkorb</button>
+    </div>
+
+    <div class="carte-item" data-cat="wasser">
+      <div class="carte-icon">🚤</div>
+      <div class="carte-name">Jetski · 1 Stunde</div>
+      <div class="carte-desc">1h Jetski für 2 Personen an der Bucht von Roses</div>
+      <div class="carte-price">120 CHF / 2 Personen</div>
+      <button class="carte-add" onclick="addToCart('Jetski 1h', 120, '')">+ In den Warenkorb</button>
+    </div>
+
+    <div class="carte-item" data-cat="wasser">
+      <div class="carte-icon">🤿</div>
+      <div class="carte-name">Schnorchel-Tour</div>
+      <div class="carte-desc">Equipment + Guide für 2h in den klarsten Buchten</div>
+      <div class="carte-price">55 CHF / Person</div>
+      <button class="carte-add" onclick="addToCart('Schnorchel-Tour', 55, '/Person')">+ In den Warenkorb</button>
+    </div>
+
+    <div class="carte-item" data-cat="wasser">
+      <div class="carte-icon">🛶</div>
+      <div class="carte-name">Kajak-Morgentour</div>
+      <div class="carte-desc">Sonnenaufgang auf dem Meer, 2h geführte Tour</div>
+      <div class="carte-price">45 CHF / Person</div>
+      <button class="carte-add" onclick="addToCart('Kajak-Morgentour', 45, '/Person')">+ In den Warenkorb</button>
+    </div>
+
+    <div class="carte-item" data-cat="wellness">
+      <div class="carte-icon">🧖</div>
+      <div class="carte-name">Massage · 60 min</div>
+      <div class="carte-desc">Entspannungs- oder tiefenwirksame Massage im Spa Roses</div>
+      <div class="carte-price">80 CHF / Person</div>
+      <button class="carte-add" onclick="addToCart('Massage 60 min', 80, '/Person')">+ In den Warenkorb</button>
+    </div>
+
+    <div class="carte-item" data-cat="wellness">
+      <div class="carte-icon">🌊</div>
+      <div class="carte-name">Meeresritual</div>
+      <div class="carte-desc">Körperpeeling & feuchtigkeitsspendende Behandlung mit Meeresprodukten</div>
+      <div class="carte-price">95 CHF / Person</div>
+      <button class="carte-add" onclick="addToCart('Meeresritual', 95, '/Person')">+ In den Warenkorb</button>
+    </div>
+
+    <div class="carte-item" data-cat="gastro">
+      <div class="carte-icon">🍷</div>
+      <div class="carte-name">Weinprobe DO Empordà</div>
+      <div class="carte-desc">Verkostung lokaler Weine im Weingut mit Tapas</div>
+      <div class="carte-price">65 CHF / Person</div>
+      <button class="carte-add" onclick="addToCart('Weinprobe Empordà', 65, '/Person')">+ In den Warenkorb</button>
+    </div>
+
+    <div class="carte-item" data-cat="gastro">
+      <div class="carte-icon">🐟</div>
+      <div class="carte-name">Anchovas-Workshop</div>
+      <div class="carte-desc">Die berühmten Anchovas von L'Escala — Kurs + Verkostung</div>
+      <div class="carte-price">55 CHF / Person</div>
+      <button class="carte-add" onclick="addToCart('Anchovas-Workshop', 55, '/Person')">+ In den Warenkorb</button>
+    </div>
+
+    <div class="carte-item" data-cat="extra">
+      <div class="carte-icon">🚐</div>
+      <div class="carte-name">Transfer Barcelona Airport</div>
+      <div class="carte-desc">Privater Transfer BCN Flughafen ↔ Roses, bis 4 Personen</div>
+      <div class="carte-price">180 CHF</div>
+      <button class="carte-add" onclick="addToCart('Transfer BCN Airport', 180, '')">+ In den Warenkorb</button>
+    </div>
+
+    <div class="carte-item" data-cat="extra">
+      <div class="carte-icon">🧺</div>
+      <div class="carte-name">Premium Willkommenskorb</div>
+      <div class="carte-desc">Lokale Produkte: Wein, Käse, Anchovas, Olivenöl, Schokolade</div>
+      <div class="carte-price">65 CHF</div>
+      <button class="carte-add" onclick="addToCart('Premium Willkommenskorb', 65, '')">+ In den Warenkorb</button>
+    </div>
+
+    <div class="carte-item" data-cat="extra">
+      <div class="carte-icon">🏛</div>
+      <div class="carte-name">Tour Cadaqués & Dalí</div>
+      <div class="carte-desc">Privater Tagesausflug nach Cadaqués und Dalí-Museum Figueres</div>
+      <div class="carte-price">110 CHF / Person</div>
+      <button class="carte-add" onclick="addToCart('Tour Cadaqués & Dalí', 110, '/Person')">+ In den Warenkorb</button>
+    </div>
+
+    <div class="carte-item" data-cat="gastro">
+      <div class="carte-icon">🛍</div>
+      <div class="carte-name">Markt-Tour Girona</div>
+      <div class="carte-desc">Geführter Besuch des Marktes + Mittagessen im historischen Zentrum</div>
+      <div class="carte-price">75 CHF / Person</div>
+      <button class="carte-add" onclick="addToCart('Markt-Tour Girona', 75, '/Person')">+ In den Warenkorb</button>
+    </div>
+
+  </div>
+</section>
+
+<div class="strip" id="contact" style="background: var(--sand-dark); color: var(--ink-mid);">
+  Fragen? Schreiben Sie uns auf Deutsch oder Français · hola@rosesundmar.ch
+</div>
+
+<footer>
+  <div>
+    <div class="footer-brand">Roses <span>&</span> Mar</div>
+    <p>Kuratierte Erlebnisse an der Costa Brava — exklusiv für Schweizer Reisende.</p>
+  </div>
+  <div>
+    <div class="footer-head">Pakete</div>
+    <ul>
+      <li><a href="#">Apartment am Meer</a></li>
+      <li><a href="#">Bienestar Costa Brava</a></li>
+      <li><a href="#">Meer & Abenteuer</a></li>
+      <li><a href="#">À la carte</a></li>
+    </ul>
+  </div>
+  <div>
+    <div class="footer-head">Rechtliches</div>
+    <ul>
+      <li><a href="#">Impressum</a></li>
+      <li><a href="#">AGB</a></li>
+      <li><a href="#">Datenschutz</a></li>
+      <li><a href="#">Stornierung</a></li>
+    </ul>
+    <p style="margin-top:1rem;">Roses & Mar GmbH · Schweiz</p>
+  </div>
+</footer>
+
+<!-- Cart -->
+<div class="cart-overlay" id="cartOverlay" onclick="toggleCart()"></div>
+<div class="cart-panel" id="cartPanel">
+  <div class="cart-header">
+    <div class="cart-title">Ihr Warenkorb</div>
+    <button class="cart-close" onclick="toggleCart()">✕</button>
+  </div>
+  <div class="cart-items" id="cartItems">
+    <div class="cart-empty" id="cartEmpty">Ihr Warenkorb ist leer.<br>Entdecken Sie unsere Erlebnisse.</div>
+  </div>
+  <div class="cart-footer">
+    <div class="cart-total-row">
+      <span class="cart-total-label">Gesamtbetrag</span>
+      <span class="cart-total-amount" id="cartTotal">CHF 0</span>
+    </div>
+    <button class="cart-submit" onclick="submitInquiry()">Anfrage senden →</button>
+    <p class="cart-note">Unverbindliche Anfrage · Wir melden uns innert 24h</p>
+  </div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<script>
+let cart = [];
+let cartOpen = false;
+
+function scrollTo(id) {
+  document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+}
+
+function toggleCart() {
+  cartOpen = !cartOpen;
+  document.getElementById('cartPanel').classList.toggle('open', cartOpen);
+  document.getElementById('cartOverlay').classList.toggle('open', cartOpen);
+}
+
+function addToCart(name, price, unit) {
+  const existing = cart.find(i => i.name === name);
+  if (existing) { existing.qty++; }
+  else { cart.push({ name, price, unit, qty: 1 }); }
+  renderCart();
+  showToast(name + ' hinzugefügt');
+  if (!cartOpen) {
+    cartOpen = true;
+    document.getElementById('cartPanel').classList.add('open');
+    document.getElementById('cartOverlay').classList.add('open');
+  }
+}
+
+function removeFromCart(name) {
+  cart = cart.filter(i => i.name !== name);
+  renderCart();
+}
+
+function renderCart() {
+  const container = document.getElementById('cartItems');
+  const empty = document.getElementById('cartEmpty');
+  const totalEl = document.getElementById('cartTotal');
+  const countEl = document.getElementById('cartCount');
+
+  const items = cart.filter(i => i.name);
+  countEl.textContent = items.reduce((s, i) => s + i.qty, 0);
+
+  if (items.length === 0) {
+    empty.style.display = 'block';
+    container.querySelectorAll('.cart-line').forEach(e => e.remove());
+    totalEl.textContent = 'CHF 0';
+    return;
+  }
+  empty.style.display = 'none';
+
+  container.querySelectorAll('.cart-line').forEach(e => e.remove());
+  let total = 0;
+  items.forEach(item => {
+    total += item.price * item.qty;
+    const line = document.createElement('div');
+    line.className = 'cart-line';
+    line.innerHTML = `
+      <div>
+        <div class="cart-line-name">${item.name}</div>
+        <div class="cart-line-sub">${item.qty} × CHF ${item.price}${item.unit}</div>
+      </div>
+      <div class="cart-line-right">
+        <div class="cart-line-price">CHF ${item.price * item.qty}</div>
+        <button class="cart-line-remove" onclick="removeFromCart('${item.name.replace(/'/g,"\\'")}')">Entfernen</button>
+      </div>`;
+    container.appendChild(line);
+  });
+  totalEl.textContent = 'CHF ' + total.toLocaleString('de-CH');
+}
+
+function filterCarte(cat, btn) {
+  document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.carte-item').forEach(el => {
+    el.classList.toggle('hidden', cat !== 'all' && el.dataset.cat !== cat);
+  });
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2200);
+}
+
+function submitInquiry() {
+  if (cart.length === 0) { showToast('Bitte wählen Sie zuerst ein Erlebnis'); return; }
+  const items = cart.map(i => `${i.name} × ${i.qty}`).join(', ');
+  showToast('Anfrage gesendet! Wir melden uns bald.');
+  cart = [];
+  renderCart();
+  toggleCart();
+}
+</script>
+</body>
+</html>
